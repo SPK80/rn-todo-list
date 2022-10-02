@@ -13,7 +13,7 @@ export default function App() {
     todosAPI.getAllItems()
       .then((items) => {
         if (!items) return
-        setTimeout(() => setTodos(items), 0) //directly(without setTimeout) not working :-/
+        setTimeout(() => setTodos(items), 100) //directly(without setTimeout) not working :-/
       })
   }, [])
   
