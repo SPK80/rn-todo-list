@@ -1,22 +1,32 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Button, StyleSheet, Text, View} from "react-native";
 
-export const Navbar: React.FC = () => {
-  return <View style={styles.navbar}>
+type PropsType = {
+  onClear: () => void
+}
+
+export const Navbar: React.FC<PropsType> = ({onClear}) => {
+  return <View style={styles.container}>
     <Text style={styles.text}>Todo App</Text>
+    <Button
+      title=" CLEAR "
+      onPress={onClear}
+    />
   </View>
 }
 
 const styles = StyleSheet.create({
-  navbar: {
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    justifyContent: 'flex-end',
     backgroundColor: '#3949ab',
-    paddingBottom: 10,
+    paddingVertical: 10,
   },
   text: {
     color: '#fff',
     fontSize: 20,
+    fontWeight: 'bold',
   }
 });
 

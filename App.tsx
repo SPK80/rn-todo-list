@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Navbar} from "./Navbar";
 import {AddTaskBar} from "./AddTaskBar";
 import {Todos} from "./Todos";
-import {todosAPI, TodoType} from "./dal/todosAPI";
+import {TodoDataType, todosAPI, TodoType} from "./dal/todosAPI";
 
 export default function App() {
   const [todos, setTodos] = useState<TodoType[]>([])
@@ -17,17 +17,24 @@ export default function App() {
       })
   }, [])
   
+  const onClearHandler = () => {
+    todosAPI.clear()
+      .then(() => setTodos([]))
+  };
+  
+  const onAddTodoHandler = (todoData: TodoDataType) => {
+    todosAPI.setItem(Date.now().toString(), todoData)
+      .then(() => setTodos((prev) =>
+          [...prev, {id: Date.now().toString(), title: todoData.title}]
+        )
+      )
+  };
+  
   return (
     <View style={styles.container}>
-      <Navbar/>
+      <Navbar onClear={onClearHandler}/>
       <View style={styles.body}>
-        <AddTaskBar onSubmit={(todoData) => {
-          todosAPI.setItem(Date.now().toString(), todoData)
-            .then(() => setTodos((prev) =>
-                [...prev, {id: Date.now().toString(), title: todoData.title}]
-              )
-            )
-        }}/>
+        <AddTaskBar onSubmit={onAddTodoHandler}/>
         <Todos todos={todos}/>
       </View>
       <StatusBar style="auto"/>

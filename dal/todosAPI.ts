@@ -21,7 +21,7 @@ export const todosAPI = {
   async getItem(id: string) {
     try {
       const data = await AsyncStorage.getItem(id);
-      if (!data) throw new Error(`Empty todo data of id:${id}`)
+      if (!data) return HandleError(`Empty todo data of id:${id}`)
       const parsedData: TodoDataType = JSON.parse(data)
       return {id, ...parsedData} as TodoType
     } catch (error) {
@@ -35,6 +35,13 @@ export const todosAPI = {
       HandleError(error)
     }
   },
+  async clear() {
+    try {
+      await AsyncStorage.clear()
+    } catch (error) {
+      HandleError(error)
+    }
+  }
 }
 
 export type TodoDataType = {
