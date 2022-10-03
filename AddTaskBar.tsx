@@ -17,9 +17,7 @@ export const AddTaskBar: React.FC<PropsType> = ({onSubmit}) => {
       />
       <Button
         title=" + "
-        onPress={() => {
-          onSubmit({title})
-        }}
+        onPress={() => onSubmit({title, isDone: false})}
       />
     </View>
   )
