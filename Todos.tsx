@@ -6,9 +6,10 @@ import {TodoType} from "./dal/todosAPI";
 type PropsType = {
   todos: TodoType[]
   onChange: (todoData: TodoType) => void
+  onRemove: (id: string) => void
 }
 
-export const Todos: React.FC<PropsType> = ({todos, onChange}) => {
+export const Todos: React.FC<PropsType> = ({todos, onChange, onRemove}) => {
   if (!todos) return (<Text>Add 1st todo</Text>)
   
   return (
@@ -20,6 +21,7 @@ export const Todos: React.FC<PropsType> = ({todos, onChange}) => {
           <Todo
             todoData={item}
             onChange={onChange}
+            onRemove={onRemove}
           />
         )}
       />

@@ -36,12 +36,19 @@ export default function App() {
       })
   };
   
+  const onRemoveHandler = (id: string) => {
+    todosAPI.remove(id)
+      .then(() => {
+        setTodos(todos => todos.filter(todo => todo.id != id))
+      })
+  };
+  
   return (
     <View style={styles.container}>
       <Navbar onClear={onClearHandler}/>
       <View style={styles.body}>
         <AddTaskBar onSubmit={onAddTodoHandler}/>
-        <Todos todos={todos} onChange={onChangeHandler}/>
+        <Todos todos={todos} onChange={onChangeHandler} onRemove={onRemoveHandler}/>
       </View>
       <StatusBar style="auto"/>
     </View>

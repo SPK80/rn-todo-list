@@ -36,6 +36,13 @@ export const todosAPI = {
       HandleError(error)
     }
   },
+  async remove(id: string) {
+    try {
+      await AsyncStorage.removeItem(id)
+    } catch (error) {
+      HandleError(error)
+    }
+  },
   async clear() {
     try {
       await AsyncStorage.clear()
