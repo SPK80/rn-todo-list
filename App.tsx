@@ -30,8 +30,10 @@ export default function App() {
   };
   
   const onChangeHandler = (changedDodo: TodoType) => {
-    setTodos(prev => prev.map(todo => todo.id === changedDodo.id ? changedDodo : todo))
     todosAPI.setItem(changedDodo)
+      .then(() => {
+        setTodos(todos => todos.map(todo => todo.id === changedDodo.id ? changedDodo : todo))
+      })
   };
   
   return (

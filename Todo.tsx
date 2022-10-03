@@ -14,6 +14,7 @@ export const Todo: React.FC<PropsType> = ({todoData, onChange}) => (
       onPress={isDone => onChange({...todoData, isDone})}
       text={todoData.title}
       textStyle={{fontFamily: "JosefinSans-Regular"}}
+      isChecked={todoData.isDone}
     />
   </View>
 );
