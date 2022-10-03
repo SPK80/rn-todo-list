@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {TodoType} from "./dal/todosAPI";
-import {Button, StyleSheet, TouchableOpacity, View} from "react-native";
+import {Button, StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 type PropsType = {
@@ -10,23 +10,48 @@ type PropsType = {
 }
 
 export const Todo: React.FC<PropsType> = ({todoData, onChange, onRemove}) => {
-  const [isContextMenuShow, setIsContextMenuShow] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
+  const [editingTitle, setEditingTitle] = useState(todoData.title)
+  
+  const onSubmit = () => {
+    onChange({...todoData, title: editingTitle})
+    setIsEditMode(false)
+  };
+  
+  const onCansel = () => {
+    setEditingTitle(todoData.title)
+    setIsEditMode(false)
+  };
+  
   return (
-    <TouchableOpacity onLongPress={() => setIsContextMenuShow(value => !value)}>
+    <TouchableOpacity onLongPress={() => setIsEditMode(value => !value)}>
       <View style={styles.container}>
-        <BouncyCheckbox
-          onPress={isDone => onChange({...todoData, isDone})}
-          text={todoData.title}
-          textStyle={{fontFamily: "JosefinSans-Regular"}}
-          isChecked={todoData.isDone}
-        />
-        {isContextMenuShow &&
-            <View>
-                <Button
-                    title=" X "
-                    onPress={() => onRemove(todoData.id)}
-                />
-            </View>
+        {!isEditMode
+          ? <BouncyCheckbox
+            onPress={isDone => onChange({...todoData, isDone})}
+            text={todoData.title}
+            isChecked={todoData.isDone}
+          />
+          : <>
+            <TextInput
+              style={styles.textInput}
+              value={editingTitle}
+              onChangeText={setEditingTitle}
+              autoFocus
+            />
+            <Button
+              title="ok"
+              onPress={onSubmit}
+            />
+            <Button
+              title="cansel"
+              onPress={onCansel}
+            />
+            <Button
+              title=" X "
+              onPress={() => onRemove(todoData.id)}
+            />
+          </>
         }
       </View>
     </TouchableOpacity>
@@ -47,4 +72,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#f6f7f7"
   },
   title: {},
+  textInput: {
+    minWidth: '50%',
+    height: 27,
+    borderBottomWidth: 1,
+    borderBottomColor: '#555',
+  },
 });
