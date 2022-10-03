@@ -28,9 +28,10 @@ export const todosAPI = {
       HandleError(error)
     }
   },
-  async setItem(id: string, todoData: TodoDataType) {
+  async setItem(todo: TodoType) {
     try {
-      await AsyncStorage.setItem(id, JSON.stringify(todoData));
+      const todoData = {...todo}
+      await AsyncStorage.setItem(todo.id, JSON.stringify(todoData));
     } catch (error) {
       HandleError(error)
     }
@@ -46,6 +47,7 @@ export const todosAPI = {
 
 export type TodoDataType = {
   title: string
+  isDone: boolean
 }
 
 export type TodoType = TodoDataType & {

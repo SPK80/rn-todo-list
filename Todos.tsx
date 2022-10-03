@@ -3,14 +3,25 @@ import {FlatList, StyleSheet, Text, View} from "react-native";
 import {Todo} from "./Todo";
 import {TodoType} from "./dal/todosAPI";
 
-export const Todos: React.FC<{ todos?: TodoType[] }> = ({todos}) => {
+type PropsType = {
+  todos: TodoType[]
+  onChange: (todoData: TodoType) => void
+}
+
+export const Todos: React.FC<PropsType> = ({todos, onChange}) => {
   if (!todos) return (<Text>Add 1st todo</Text>)
+  
   return (
     <View style={styles.container}>
       <FlatList
         data={todos}
         keyExtractor={item => item.id}
-        renderItem={({item}) => (<Todo todoData={item}/>)}
+        renderItem={({item}) => (
+          <Todo
+            todoData={item}
+            onChange={onChange}
+          />
+        )}
       />
     </View>
   )

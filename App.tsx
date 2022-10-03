@@ -18,16 +18,20 @@ export default function App() {
   }, [])
   
   const onClearHandler = () => {
-    todosAPI.clear()
-      .then(() => setTodos([]))
+    todosAPI.clear().then(() => setTodos([]))
   };
   
   const onAddTodoHandler = (todoData: TodoDataType) => {
-    todosAPI.setItem(Date.now().toString(), todoData)
+    todosAPI.setItem({id: Date.now().toString(), ...todoData})
       .then(() => setTodos((prev) =>
-          [...prev, {id: Date.now().toString(), title: todoData.title}]
+          [{id: Date.now().toString(), ...todoData}, ...prev]
         )
       )
+  };
+  
+  const onChangeHandler = (changedDodo: TodoType) => {
+    setTodos(prev => prev.map(todo => todo.id === changedDodo.id ? changedDodo : todo))
+    todosAPI.setItem(changedDodo)
   };
   
   return (
@@ -35,7 +39,7 @@ export default function App() {
       <Navbar onClear={onClearHandler}/>
       <View style={styles.body}>
         <AddTaskBar onSubmit={onAddTodoHandler}/>
-        <Todos todos={todos}/>
+        <Todos todos={todos} onChange={onChangeHandler}/>
       </View>
       <StatusBar style="auto"/>
     </View>
