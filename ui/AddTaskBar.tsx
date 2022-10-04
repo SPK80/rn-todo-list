@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Button, StyleSheet, TextInput, View} from "react-native";
-import {TodoDataType} from "./dal/todosAPI";
+import {TodoDataType} from "../dal/todosAPI";
 
 type PropsType = {
   onSubmit: (todoData: TodoDataType) => void

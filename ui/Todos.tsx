@@ -1,7 +1,7 @@
 import React from 'react'
 import {FlatList, StyleSheet, Text, View} from "react-native";
 import {Todo} from "./Todo";
-import {TodoType} from "./dal/todosAPI";
+import {TodoType} from "../dal/todosAPI";
 
 type PropsType = {
   todos: TodoType[]

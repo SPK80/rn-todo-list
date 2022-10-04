@@ -1,9 +1,9 @@
 import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from "react";
-import {Navbar} from "./Navbar";
-import {AddTaskBar} from "./AddTaskBar";
-import {Todos} from "./Todos";
+import {Navbar} from "./ui/Navbar";
+import {AddTaskBar} from "./ui/AddTaskBar";
+import {Todos} from "./ui/Todos";
 import {TodoDataType, todosAPI, TodoType} from "./dal/todosAPI";
 
 export default function App() {

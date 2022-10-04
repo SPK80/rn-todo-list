@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TodoType} from "./dal/todosAPI";
+import {TodoType} from "../dal/todosAPI";
 import {Button, StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
