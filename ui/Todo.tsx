@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {TodoType} from "../dal/todosAPI";
-import {Button, StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
+import {Button, StyleSheet, View} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import {AutoExpandingTextInput} from "./AutoExpandingTextInput";
 
 type PropsType = {
   todoData: TodoType
@@ -24,21 +25,23 @@ export const Todo: React.FC<PropsType> = ({todoData, onChange, onRemove}) => {
   };
   
   return (
-    <TouchableOpacity onLongPress={() => setIsEditMode(value => !value)}>
-      <View style={styles.container}>
-        {!isEditMode
-          ? <BouncyCheckbox
-            onPress={isDone => onChange({...todoData, isDone})}
-            text={todoData.title}
-            isChecked={todoData.isDone}
+    <View style={styles.container}>
+      {!isEditMode
+        ?
+        <BouncyCheckbox
+          style={styles.bouncyCheckbox}
+          onPress={isDone => onChange({...todoData, isDone})}
+          text={todoData.title}
+          isChecked={todoData.isDone}
+          onLongPress={() => setIsEditMode(value => !value)}
+        />
+        : <>
+          <AutoExpandingTextInput
+            style={styles.textInput}
+            value={editingTitle}
+            onChangeText={setEditingTitle}
           />
-          : <>
-            <TextInput
-              style={styles.textInput}
-              value={editingTitle}
-              onChangeText={setEditingTitle}
-              autoFocus
-            />
+          <View style={styles.buttons}>
             <Button
               title="ok"
               onPress={onSubmit}
@@ -51,10 +54,10 @@ export const Todo: React.FC<PropsType> = ({todoData, onChange, onRemove}) => {
               title=" X "
               onPress={() => onRemove(todoData.id)}
             />
-          </>
-        }
-      </View>
-    </TouchableOpacity>
+          </View>
+        </>
+      }
+    </View>
   )
 };
 
@@ -71,11 +74,16 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: "#f6f7f7"
   },
-  title: {},
   textInput: {
-    minWidth: '50%',
-    height: 27,
-    borderBottomWidth: 1,
-    borderBottomColor: '#555',
+    width: '60%',
+    marginEnd: 5,
+  },
+  buttons: {
+    width: '40%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  bouncyCheckbox: {
+    width: '100%',
   },
 });
