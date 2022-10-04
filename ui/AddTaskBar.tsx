@@ -12,12 +12,15 @@ export const AddTaskBar: React.FC<PropsType> = ({onSubmit}) => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder='input task'
         onChangeText={setTitle}
+        value={title}
       />
       <Button
         title=" + "
-        onPress={() => onSubmit({title, isDone: false})}
+        onPress={() => {
+          onSubmit({title, isDone: false})
+          setTitle('')
+        }}
       />
     </View>
   )
